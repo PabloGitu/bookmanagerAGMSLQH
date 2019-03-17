@@ -1,0 +1,35 @@
+{
+    "generator-jhipster": {
+        "promptValues": {
+            "packageName": "com.tfg.bookmanageragmsqlh"
+        },
+        "jhipsterVersion": "5.8.1",
+        "applicationType": "monolith",
+        "baseName": "bookmanageragmsqlh",
+        "packageName": "com.tfg.bookmanageragmsqlh",
+        "packageFolder": "com/tfg/bookmanageragmsqlh",
+        "serverPort": "8080",
+        "authenticationType": "jwt",
+        "cacheProvider": "ehcache",
+        "enableHibernateCache": true,
+        "websocket": false,
+        "databaseType": "sql",
+        "devDatabaseType": "mysql",
+        "prodDatabaseType": "mysql",
+        "searchEngine": false,
+        "messageBroker": false,
+        "serviceDiscoveryType": false,
+        "buildTool": "gradle",
+        "enableSwaggerCodegen": false,
+        "jwtSecretKey": "MzNlNThjNmU2Mzk5ZjU3YWQzMTBjMWQyMmFkYjJlY2UwODljZmI2MTczOWUwN2NiYzY5MjUyODE3MzYwOWZhM2M3MjA5NWZlNDBhMTYwZTc5YjNmNjRiYWY3NWFkYjMzMTI0NzQ0MWQ2Nzk0MjExMzVlYzQ3MDEyYTlmZTVhZTA=",
+        "clientFramework": "angularX",
+        "useSass": true,
+        "clientPackageManager": "npm",
+        "testFrameworks": [],
+        "jhiPrefix": "jhi",
+        "entitySuffix": "",
+        "dtoSuffix": "DTO",
+        "otherModules": [],
+        "enableTranslation": false
+    }
+}
