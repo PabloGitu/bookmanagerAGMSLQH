@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="book">
+            <h2><span>Book</span> {{book.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Title</span></dt>
+                <dd>
+                    <span>{{book.title}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{book.description}}</span>
+                </dd>
+                <dt><span>Publication Date</span></dt>
+                <dd>
+                    <span>{{book.publicationDate}}</span>
+                </dd>
+                <dt><span>Price</span></dt>
+                <dd>
+                    <span>{{book.price}}</span>
+                </dd>
+                <dt><span>Book Cover</span></dt>
+                <dd>
+                    <span>{{book.bookCover}}</span>
+                </dd>
+                <dt><span>Genre</span></dt>
+                <dd>
+                    <span>{{book.genre}}</span>
+                </dd>
+                <dt><span>Is Best Seller</span></dt>
+                <dd>
+                    <span>{{book.isBestSeller}}</span>
+                </dd>
+                <dt><span>Image</span></dt>
+                <dd>
+                    <div *ngIf="book.image">
+                        <a (click)="openFile(book.imageContentType, book.image)">
+                            <img [src]="'data:' + book.imageContentType + ';base64,' + book.image" style="max-width: 100%;" alt="book image"/>
+                        </a>
+                        {{book.imageContentType}}, {{byteSize(book.image)}}
+                    </div>
+                </dd>
+                <dt><span>Author</span></dt>
+                <dd>
+                    <div *ngIf="book.author">
+                        <a [routerLink]="['/author', book.author?.id, 'view']">{{book.author?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span>Publisher</span></dt>
+                <dd>
+                    <div *ngIf="book.publisher">
+                        <a [routerLink]="['/publisher', book.publisher?.id, 'view']">{{book.publisher?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/book', book.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
