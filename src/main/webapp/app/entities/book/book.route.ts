@@ -51,6 +51,30 @@ export const bookRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
+        path: 'author/:id',
+        component: BookComponent,
+        resolve: {
+            book: BookResolve
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Books'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'publisher/:id',
+        component: BookComponent,
+        resolve: {
+            book: BookResolve
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Books'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
         path: 'new',
         component: BookUpdateComponent,
         resolve: {

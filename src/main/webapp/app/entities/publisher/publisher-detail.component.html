@@ -17,6 +17,9 @@
                 <dd>
                     <span>{{publisher.localization}}</span>
                 </dd>
+                <div>
+                    <a [routerLink]="['/book/publisher/' + publisher.id ]" >Books of {{publisher.name}}</a>
+                </div>
             </dl>
 
             <button type="submit"

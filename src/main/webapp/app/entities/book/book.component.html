@@ -46,12 +46,12 @@
                 </td>
                 <td>
                     <div *ngIf="book.author">
-                        <a [routerLink]="['../author', book.author?.id, 'view' ]" >{{book.author?.name}}</a>
+                        <a [routerLink]="['/author', book.author?.id, 'view' ]" >{{book.author?.name}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="book.publisher">
-                        <a [routerLink]="['../publisher', book.publisher?.id, 'view' ]" >{{book.publisher?.name}}</a>
+                        <a [routerLink]="['/publisher', book.publisher?.id, 'view' ]" >{{book.publisher?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

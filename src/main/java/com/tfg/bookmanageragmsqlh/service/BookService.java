@@ -71,4 +71,12 @@ public class BookService {
     public void delete(Long id) {
         log.debug("Request to delete Book : {}", id);        bookRepository.deleteById(id);
     }
+
+    public Page<Book> getBooksByAuthor(Long id, Pageable pageable) {
+        return bookRepository.getBooksByAuthor(id, pageable);
+    }
+
+    public Page<Book> getBooksByPublisher(Long id, Pageable pageable) {
+        return bookRepository.getBooksByPublisher(id, pageable);
+    }
 }

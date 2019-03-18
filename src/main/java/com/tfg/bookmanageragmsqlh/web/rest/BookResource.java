@@ -93,6 +93,34 @@ public class BookResource {
     }
 
     /**
+     * GET  /books/author/:id : get the books of an author.
+     *
+     * @param id the id of the author
+     * @return the ResponseEntity with status 200 (OK) and with body the book, or with status 404 (Not Found)
+     */
+    @GetMapping("/books/author/{id}")
+    public ResponseEntity<List<Book>> getBooksByAuthor(@PathVariable Long id, Pageable pageable) {
+        log.debug("REST request to get Books of an author : {}", id);
+        Page<Book> page = bookService.getBooksByAuthor(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/books/author/" + id);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * GET  /books/publisher/:id : get the books of a publisher.
+     *
+     * @param id the id of the publisher
+     * @return the ResponseEntity with status 200 (OK) and with body the book, or with status 404 (Not Found)
+     */
+    @GetMapping("/books/publisher/{id}")
+    public ResponseEntity<List<Book>> getBooksByPublisher(@PathVariable Long id, Pageable pageable) {
+        log.debug("REST request to get Books of an author : {}", id);
+        Page<Book> page = bookService.getBooksByPublisher(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/books/publisher/" + id);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
      * GET  /books/:id : get the "id" book.
      *
      * @param id the id of the book to retrieve

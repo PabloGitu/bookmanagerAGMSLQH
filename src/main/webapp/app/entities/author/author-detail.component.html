@@ -9,6 +9,9 @@
                 <dd>
                     <span>{{author.name}}</span>
                 </dd>
+                <div>
+                    <a [routerLink]="['/book/author/' + author.id ]" >Books of {{author.name}}</a>
+                </div>
                 <dt><span>Genre</span></dt>
                 <dd>
                     <span>{{author.genre}}</span>

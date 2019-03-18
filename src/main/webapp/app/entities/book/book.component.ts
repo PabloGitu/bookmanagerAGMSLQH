@@ -9,6 +9,7 @@ import { AccountService } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { BookService } from './book.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'jhi-book',
@@ -24,6 +25,8 @@ export class BookComponent implements OnInit, OnDestroy {
     predicate: any;
     reverse: any;
     totalItems: number;
+    public id: string;
+    public url: string;
 
     constructor(
         protected bookService: BookService,
@@ -31,7 +34,9 @@ export class BookComponent implements OnInit, OnDestroy {
         protected dataUtils: JhiDataUtils,
         protected eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected router: Router,
+        protected route: ActivatedRoute
     ) {
         this.books = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -43,32 +48,58 @@ export class BookComponent implements OnInit, OnDestroy {
         this.reverse = true;
     }
 
-    loadAll() {
-        this.bookService
-            .query({
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.sort()
-            })
-            .subscribe(
-                (res: HttpResponse<IBook[]>) => this.paginateBooks(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+    loadAll(id, url) {
+        if (url.includes('author')) {
+            this.bookService
+                .findByAuthor(id, {
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.sort()
+                })
+                .subscribe(
+                    (res: HttpResponse<IBook[]>) => this.paginateBooks(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        } else if (url.includes('publisher')) {
+            this.bookService
+                .findByPublisher(id, {
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.sort()
+                })
+                .subscribe(
+                    (res: HttpResponse<IBook[]>) => this.paginateBooks(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        } else {
+            this.bookService
+                .query({
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.sort()
+                })
+                .subscribe(
+                    (res: HttpResponse<IBook[]>) => this.paginateBooks(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
     }
 
     reset() {
         this.page = 0;
         this.books = [];
-        this.loadAll();
+        this.loadAll(this.id, this.url);
     }
 
     loadPage(page) {
         this.page = page;
-        this.loadAll();
+        this.loadAll(this.id, this.url);
     }
 
     ngOnInit() {
-        this.loadAll();
+        this.id = this.route.snapshot.paramMap.get('id');
+        this.url = this.router.url;
+        this.loadAll(this.id, this.url);
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
