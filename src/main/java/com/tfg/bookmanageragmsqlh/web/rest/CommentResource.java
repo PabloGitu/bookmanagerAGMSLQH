@@ -93,6 +93,20 @@ public class CommentResource {
     }
 
     /**
+     * GET  /comments/books/:id : get comments from a book.
+     *
+     * @param id the id of the book
+     * @return the ResponseEntity with status 200 (OK) and the list of comments in body
+     */
+    @GetMapping("/comments/book/{id}")
+    public ResponseEntity<List<Comment>> getCommentsByBook(@PathVariable Long id, Pageable pageable) {
+        log.debug("REST request to get Comments of a book : {}", id);
+        Page<Comment> page = commentService.getCommentsByBook(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/comments/book/" + id);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
      * GET  /comments/:id : get the "id" comment.
      *
      * @param id the id of the comment to retrieve

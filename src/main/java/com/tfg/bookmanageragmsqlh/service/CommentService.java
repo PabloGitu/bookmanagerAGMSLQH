@@ -71,4 +71,8 @@ public class CommentService {
     public void delete(Long id) {
         log.debug("Request to delete Comment : {}", id);        commentRepository.deleteById(id);
     }
+
+    public Page<Comment> getCommentsByBook(Long id, Pageable pageable) {
+        return commentRepository.getCommentsByBook(id, pageable);
+    }
 }

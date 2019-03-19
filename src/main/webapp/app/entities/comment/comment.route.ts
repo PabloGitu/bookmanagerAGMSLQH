@@ -51,6 +51,18 @@ export const commentRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
+        path: 'book/:id',
+        component: CommentComponent,
+        resolve: {
+            comment: CommentResolve
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Comments'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
         path: 'new',
         component: CommentUpdateComponent,
         resolve: {

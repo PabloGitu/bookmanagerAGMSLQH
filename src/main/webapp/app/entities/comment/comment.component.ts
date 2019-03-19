@@ -9,6 +9,7 @@ import { AccountService } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { CommentService } from './comment.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'jhi-comment',
@@ -24,13 +25,17 @@ export class CommentComponent implements OnInit, OnDestroy {
     predicate: any;
     reverse: any;
     totalItems: number;
+    public id: string;
+    public url: string;
 
     constructor(
         protected commentService: CommentService,
         protected jhiAlertService: JhiAlertService,
         protected eventManager: JhiEventManager,
         protected parseLinks: JhiParseLinks,
-        protected accountService: AccountService
+        protected accountService: AccountService,
+        protected router: Router,
+        protected route: ActivatedRoute
     ) {
         this.comments = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -42,32 +47,47 @@ export class CommentComponent implements OnInit, OnDestroy {
         this.reverse = true;
     }
 
-    loadAll() {
-        this.commentService
-            .query({
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.sort()
-            })
-            .subscribe(
-                (res: HttpResponse<IComment[]>) => this.paginateComments(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+    loadAll(id, url) {
+        if (url.includes('book')) {
+            this.commentService
+                .findByBook(id, {
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.sort()
+                })
+                .subscribe(
+                    (res: HttpResponse<IComment[]>) => this.paginateComments(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        } else {
+            this.commentService
+                .query({
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.sort()
+                })
+                .subscribe(
+                    (res: HttpResponse<IComment[]>) => this.paginateComments(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
     }
 
     reset() {
         this.page = 0;
         this.comments = [];
-        this.loadAll();
+        this.loadAll(this.id, this.url);
     }
 
     loadPage(page) {
         this.page = page;
-        this.loadAll();
+        this.loadAll(this.id, this.url);
     }
 
     ngOnInit() {
-        this.loadAll();
+        this.id = this.route.snapshot.paramMap.get('id');
+        this.url = this.router.url;
+        this.loadAll(this.id, this.url);
         this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
