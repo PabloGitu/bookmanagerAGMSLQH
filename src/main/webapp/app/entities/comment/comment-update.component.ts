@@ -49,6 +49,7 @@ export class CommentUpdateComponent implements OnInit {
         if (this.comment.id !== undefined) {
             this.subscribeToSaveResponse(this.commentService.update(this.comment));
         } else {
+            this.comment.userName = 'a';
             this.subscribeToSaveResponse(this.commentService.create(this.comment));
         }
     }

@@ -196,6 +196,20 @@ public class CommentResourceIntTest {
             .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
+
+    @Test
+    @Transactional
+    public void getCommentsByBook() throws Exception {
+        // Initialize the database
+        commentRepository.saveAndFlush(comment);
+
+        // Get all the commentList
+        restCommentMockMvc.perform(get("/api/comments/book/{id}?sort=id,desc", comment.getBook().getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(comment.getId().intValue())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+    }
     
     @Test
     @Transactional
