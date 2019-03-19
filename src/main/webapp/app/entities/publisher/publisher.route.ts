@@ -57,7 +57,7 @@ export const publisherRoute: Routes = [
             publisher: PublisherResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Publishers'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +69,7 @@ export const publisherRoute: Routes = [
             publisher: PublisherResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Publishers'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +84,7 @@ export const publisherPopupRoute: Routes = [
             publisher: PublisherResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Publishers'
         },
         canActivate: [UserRouteAccessService],

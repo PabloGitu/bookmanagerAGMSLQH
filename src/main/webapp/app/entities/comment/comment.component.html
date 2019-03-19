@@ -14,11 +14,11 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="userName"><span>User Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="description"><span>Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="book.title"><span>Book</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th></th>
+                <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="userName"><span>User Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="description"><span>Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="book.title"><span>Book</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th></th>
             </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
@@ -28,7 +28,7 @@
                 <td>{{comment.description}}</td>
                 <td>
                     <div *ngIf="comment.book">
-                        <a [routerLink]="['../book', comment.book?.id, 'view' ]" >{{comment.book?.title}}</a>
+                        <a [routerLink]="['/book', comment.book?.id, 'view' ]" >{{comment.book?.title}}</a>
                     </div>
                 </td>
                 <td class="text-right">
@@ -39,13 +39,7 @@
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline">View</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/comment', comment.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
+                        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit"
                                 [routerLink]="['/', 'comment', { outlets: { popup: comment.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"

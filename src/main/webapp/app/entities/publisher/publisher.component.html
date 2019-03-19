@@ -1,7 +1,7 @@
 <div>
     <h2 id="page-heading">
         <span>Publishers</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-publisher" [routerLink]="['/publisher/new']">
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-publisher" [routerLink]="['/publisher/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
             Create new Publisher
@@ -14,11 +14,11 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="name"><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="distribution"><span>Distribution</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="localization"><span>Localization</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th></th>
+                <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="name"><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="distribution"><span>Distribution</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="localization"><span>Localization</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th></th>
             </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
@@ -35,13 +35,7 @@
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline">View</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/publisher', publisher.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
+                        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit"
                                 [routerLink]="['/', 'publisher', { outlets: { popup: publisher.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
