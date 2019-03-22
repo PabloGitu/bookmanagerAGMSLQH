@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="author">
-            <h2>{{author.name}}</h2>
+            <h1>{{author.name}}</h1>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
@@ -28,16 +28,16 @@
                 <dd>
                     <span>{{author.country}}</span>
                 </dd>
+                <div *ngIf="author.image">
                 <dt><span>Image</span></dt>
                 <dd>
                     <div *ngIf="author.image">
                         <a (click)="openFile(author.imageContentType, author.image)">
                             <img [src]="'data:' + author.imageContentType + ';base64,' + author.image" style="max-width: 100%;" alt="author image"/>
                         </a>
-                        {{author.imageContentType}}, {{byteSize(author.image)}}
                     </div>
                 </dd>
-            </dl>
+                </div>
 
             <button type="submit"
                     (click)="previousState()"

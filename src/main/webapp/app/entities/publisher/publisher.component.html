@@ -1,6 +1,6 @@
 <div>
     <h2 id="page-heading">
-        <span>Publishers</span>
+        <h1>Publishers</h1>
         <button *jhiHasAnyAuthority="'ROLE_ADMIN'" id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-publisher" [routerLink]="['/publisher/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
@@ -14,7 +14,6 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-                <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th jhiSortBy="name"><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th jhiSortBy="distribution"><span>Distribution</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th jhiSortBy="localization"><span>Localization</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -23,8 +22,7 @@
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let publisher of publishers ;trackBy: trackId">
-                <td><a [routerLink]="['/publisher', publisher.id, 'view' ]">{{publisher.id}}</a></td>
-                <td>{{publisher.name}}</td>
+                <td><a [routerLink]="['/publisher', publisher.id, 'view' ]">{{publisher.name}}</a></td>
                 <td>{{publisher.distribution}}</td>
                 <td>{{publisher.localization}}</td>
                 <td class="text-right">

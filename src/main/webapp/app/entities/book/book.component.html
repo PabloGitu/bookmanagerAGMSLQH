@@ -1,6 +1,6 @@
 <div>
     <h2 id="page-heading">
-        <span>Books</span>
+        <h1>Books</h1>
         <button *jhiHasAnyAuthority="'ROLE_ADMIN'" id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-book" [routerLink]="['/book/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
@@ -30,10 +30,14 @@
             <tr *ngFor="let book of books ;trackBy: trackId">
                 <td><a [routerLink]="['/book', book.id, 'view' ]">{{book.title}}</a></td>
                 <td>{{book.publicationDate | date:'mediumDate'}}</td>
-                <td>{{book.price}}</td>
+                <td>{{book.price}}$</td>
                 <td>{{book.bookCover}}</td>
                 <td>{{book.genre}}</td>
-                <td>{{book.isBestSeller}}</td>
+                <td>
+                    <a *ngIf="book.isBestSeller">
+                        Best Seller
+                    </a>
+                </td>
                 <td>
                     <a *ngIf="book.image" (click)="openFile(book.imageContentType, book.image)">
                         <img [src]="'data:' + book.imageContentType + ';base64,' + book.image" style="max-height: 30px;" alt="book image"/>

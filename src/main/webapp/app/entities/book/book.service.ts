@@ -53,6 +53,7 @@ export class BookService {
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
+    // Get all books from a publisher
     findByPublisher(id: number, req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
