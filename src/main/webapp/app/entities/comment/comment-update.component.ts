@@ -8,18 +8,21 @@ import { IComment } from 'app/shared/model/comment.model';
 import { CommentService } from './comment.service';
 import { IBook } from 'app/shared/model/book.model';
 import { BookService } from 'app/entities/book';
+import { LoginModalService, AccountService, Account } from 'app/core';
 
 @Component({
     selector: 'jhi-comment-update',
     templateUrl: './comment-update.component.html'
 })
 export class CommentUpdateComponent implements OnInit {
+    account: Account;
     comment: IComment;
     isSaving: boolean;
 
     books: IBook[];
 
     constructor(
+        private accountService: AccountService,
         protected jhiAlertService: JhiAlertService,
         protected commentService: CommentService,
         protected bookService: BookService,
@@ -27,6 +30,9 @@ export class CommentUpdateComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.accountService.identity().then((account: Account) => {
+            this.account = account;
+        });
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ comment }) => {
             this.comment = comment;
@@ -49,7 +55,7 @@ export class CommentUpdateComponent implements OnInit {
         if (this.comment.id !== undefined) {
             this.subscribeToSaveResponse(this.commentService.update(this.comment));
         } else {
-            this.comment.userName = 'a';
+            this.comment.userName = this.account.login;
             this.subscribeToSaveResponse(this.commentService.create(this.comment));
         }
     }
